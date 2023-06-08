@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Upload file</title>
+    </head>
+    <body>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Save"/>
+        </form>
+
+        <form method="post">
+            {% csrf_token %}
+            <button name="action" value="delete">Delete</button>
+        </form>
+    </body>
+</html>
