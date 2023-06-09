@@ -11,9 +11,12 @@
             <input type="submit" value="Save"/>
         </form>
 
+        {{word_cnt}}
+
         <form method="post">
             {% csrf_token %}
-            <button name="action" value="delete">Delete</button>
+            <button name="action" value="delete">Delete last send file</button>
         </form>
+
     </body>
 </html>
