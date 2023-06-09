@@ -7,7 +7,8 @@ import string
 def upload_file(request):
     wordcount = request.POST.get("wordcount")
     action = request.POST.get("action")
-    file = Document.objects.all()
+    files = Document.objects.all()
+    current_file = Document.objects.all().values().last()["docfile"]
     characters = string.punctuation
     word_cnt = 0
 
@@ -18,8 +19,8 @@ def upload_file(request):
     else:
         form = UploadFileForm()
 
-    if file:
-        direct = file.values().last()["docfile"]
+    if files:
+        direct = files.values().last()["docfile"]
         with open(f"media/{direct}", encoding="utf-8") as file:
             for words in file:
                 for word in words.split():
@@ -29,9 +30,16 @@ def upload_file(request):
                         word_cnt += 1
 
     if action == "delete":
-        if file:
+        if files:
             Document.objects.all().last().delete()
         else:
             return render(request, "empty.html")
 
-    return render(request, "upload.html", {"form": form, "word_cnt": word_cnt})
+    context = {
+        "form": form,
+        "word_cnt": word_cnt,
+        "files": files,
+        "current_file": current_file,
+    }
+
+    return render(request, "upload.html", context)

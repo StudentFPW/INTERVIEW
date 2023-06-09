@@ -5,18 +5,38 @@
         <title>Upload file</title>
     </head>
     <body>
+
+        <hr>
+
+        <h1>Find your word:</h1>
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Save"/>
         </form>
 
-        {{word_cnt}}
+        <br>
+
+        Word count {{word_cnt}} in this file {{current_file}}
+
+        <hr>
 
         <form method="post">
             {% csrf_token %}
             <button name="action" value="delete">Delete last send file</button>
         </form>
+
+        <hr>
+
+        <h1>Files in data base:</h1>
+
+        {% if files %}
+            {% for content in files %}
+                {{content.docfile}}<br>
+            {% endfor %}
+        {% endif %}
+
+        <hr>
 
     </body>
 </html>
